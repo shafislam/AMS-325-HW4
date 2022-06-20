@@ -6,18 +6,13 @@ def mandelbrot(n, N_max, threshold):
     y = np.linspace(-1.5, 1.5, n)
     """creates two arrays corresponding to the x and y axes
     """
-    grid1, grid2 = np.meshgrid(x, y)
-    C_array = []
-    for x, y in zip(x, y):
-        C_array += [x + 1j * y]
-    """creates an array of complex values
-    """
-    z = 0
+    c = x[:,newaxis] + 1j*y[newaxis,:]
+    z = c
     mask = np.empty([1, 7])
     
-    for c, i in zip(C_array, range(7)):
+    for c, i in zip(C_array, range(N_max)):
         z_var = z**2 + c
-        mask[0][i] = (z_var < threshold)
+        mask[0][i] = (abs(z_var) < threshold)
         
     """creates an array for plot consisting of boolean
         values that correspond to whether or not the 
